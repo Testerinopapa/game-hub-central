@@ -1,8 +1,14 @@
+import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import TopBar from "@/components/TopBar";
 import GameCard from "@/components/GameCard";
+import {
+  Sheet,
+  SheetContent,
+} from "@/components/ui/sheet";
 
 const Index = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const games = [
     { title: "Astroneer", image: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400&h=600&fit=crop", lastPlayed: "2 hours ago" },
     { title: "Battlerite", image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=600&fit=crop", lastPlayed: "Yesterday" },
@@ -17,19 +23,27 @@ const Index = () => {
 
   return (
     <div className="flex h-screen bg-background text-foreground overflow-hidden">
-      <Sidebar />
+      <div className="hidden md:block">
+        <Sidebar />
+      </div>
+      
+      <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+        <SheetContent side="left" className="p-0 w-16 bg-sidebar-bg border-r border-border">
+          <Sidebar />
+        </SheetContent>
+      </Sheet>
       
       <div className="flex-1 flex flex-col overflow-hidden">
-        <TopBar />
+        <TopBar onMenuClick={() => setMobileMenuOpen(true)} />
         
         <main className="flex-1 overflow-y-auto">
-          <div className="p-8">
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold mb-2">My Games</h1>
-              <p className="text-muted-foreground">Your gaming library</p>
+          <div className="p-4 md:p-8">
+            <div className="mb-6 md:mb-8">
+              <h1 className="text-2xl md:text-3xl font-bold mb-2">My Games</h1>
+              <p className="text-muted-foreground text-sm md:text-base">Your gaming library</p>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
               {games.map((game) => (
                 <GameCard
                   key={game.title}
