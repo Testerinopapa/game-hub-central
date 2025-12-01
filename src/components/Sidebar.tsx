@@ -1,13 +1,14 @@
 import { Home, Library, Clock, Star, Settings, TrendingUp, User } from "lucide-react";
+import { NavLink } from "./NavLink";
 
 const Sidebar = () => {
   const navItems = [
-    { icon: Home, label: "Home", active: true },
-    { icon: Library, label: "Library", active: false },
-    { icon: Clock, label: "Recent", active: false },
-    { icon: Star, label: "Favorites", active: false },
-    { icon: TrendingUp, label: "Trending", active: false },
-    { icon: User, label: "Friends", active: false },
+    { icon: Home, label: "Home", path: "/" },
+    { icon: Library, label: "Library", path: "/library" },
+    { icon: Clock, label: "Recent", path: "/recent" },
+    { icon: Star, label: "Favorites", path: "/favorites" },
+    { icon: TrendingUp, label: "Trending", path: "/trending" },
+    { icon: User, label: "Friends", path: "/friends" },
   ];
 
   return (
@@ -18,17 +19,15 @@ const Sidebar = () => {
       
       <nav className="flex flex-col gap-4">
         {navItems.map((item) => (
-          <button
+          <NavLink
             key={item.label}
-            className={`p-3 rounded-lg transition-all ${
-              item.active
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30"
-                : "text-muted-foreground hover:text-foreground hover:bg-secondary"
-            }`}
+            to={item.path}
+            className="p-3 rounded-lg transition-all text-muted-foreground hover:text-foreground hover:bg-secondary"
+            activeClassName="!bg-primary !text-primary-foreground shadow-lg shadow-primary/30"
             title={item.label}
           >
             <item.icon className="w-5 h-5" />
-          </button>
+          </NavLink>
         ))}
       </nav>
 
